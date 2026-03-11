@@ -1,0 +1,191 @@
+local Version = "1.6.41"
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/download/" .. Version .. "/main.lua"))()
+
+-- [[ GLOBAL SETTINGS ]] --
+local lp = game.Players.LocalPlayer
+local RS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+_G.CFrameSpeed = 0
+_G.CFrameFly = false
+_G.FlySpeed = 1
+_G.CustomDashEnabled = false
+_G.DashDistance = 15
+
+-- [[ WINDOW ]] --
+local Window = WindUI:CreateWindow({
+    Title = "Ogii Itgel Hub",
+    Icon = "rbxassetid://4483362458",
+    Author = "Ogii Itgel",
+    Folder = "OgiiItgelWindConfig"
+})
+
+-- [[ TABS ]] --
+local MoveTab = Window:Tab({ Title = "Movement", Icon = "run" })
+local TechTab = Window:Tab({ Title = "Tech", Icon = "code" })
+local VisualTab = Window:Tab({ Title = "Visuals", Icon = "eye" })
+local AvatarTab = Window:Tab({ Title = "Avatar", Icon = "user" })
+local MiscTab = Window:Tab({ Title = "Misc", Icon = "settings" })
+
+-------------------------------------------------------------------------
+-- [ TECH TAB - ALL 12 SCRIPTS VERIFIED ] --
+-------------------------------------------------------------------------
+TechTab:Section({ Title = "Custom Tech" })
+
+TechTab:Toggle({
+    Title = "Ghost Loop Dash (Q)",
+    Value = false,
+    Callback = function(Value) _G.CustomDashEnabled = Value end,
+})
+
+-- Custom Buttons (Kiba, Lyoto, Gojo, M1 Reset)
+local customTechs = {
+    {Name = "Kiba 4", Url = "https://pastebin.com/raw/m6WYZ1KE"},
+    {Name = "Lyoto", Url = "https://raw.githubusercontent.com/sigmavexr/AUTO-KYOTO-SATURN-HUB/refs/heads/main/AUTO%20KYOTO"},
+    {Name = "Gojo", Url = "https://gojotech.tsbscripts.workers.dev/"},
+    {Name = "Legit M1 Reset", Url = "https://raw.githubusercontent.com/Defy-cloud/Scripts/refs/heads/main/LegitM1Reset"}
+}
+
+for _, tech in pairs(customTechs) do
+    TechTab:Button({
+        Title = tech.Name,
+        Callback = function() 
+            loadstring(game:HttpGet(tech.Url))() 
+            WindUI:Notify({ Title = "Tech Loaded", Content = tech.Name .. " is ready!", Duration = 3 })
+        end
+    })
+end
+
+TechTab:Section({ Title = "External Hubs" })
+
+local hubList = {
+    ["Yqantg TSB"] = "https://rawscripts.net/raw/The-Strongest-Battlegrounds-Yqantg-51718",
+    ["MinhNhat"] = "https://rawscripts.net/raw/Universal-Script-MinhNhat-Tsb-62161",
+    ["Lunar"] = "https://pastefy.app/ADhVPN6M/raw",
+    ["Jnkie Tech"] = "https://api.jnkie.com/api/v1/luascripts/public/5659752fa0f7c10df56777eafd8f4813f15d3cde1b206f7e10f6b87af4fa9dfd/download",
+    ["The Lethal Dash"] = "https://api.jnkie.com/api/v1/luascripts/public/57a4d240a2440f0450986c966469092ccfb8d4797392cb8f469fa8b6e605e64d/download",
+    ["The Oreo Tech"] = "https://raw.githubusercontent.com/letuankiet09812345-cmyk/Testkiba/refs/heads/main/Oreo%20Tech%20Script%20By%20YQANTG.txt",
+    ["The Lix Tech"] = "https://raw.githubusercontent.com/MerebennieOfficial/ExoticJn/refs/heads/main/Protected_83737738.txt"
+}
+
+for name, url in pairs(hubList) do
+    TechTab:Button({
+        Title = name,
+        Callback = function() loadstring(game:HttpGet(url))() end
+    })
+end
+
+TechTab:Button({
+   Title = "The Twisted Tech (Instant)",
+   Callback = function()
+      local parts = {"aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2xldHVh", "bmtpZXQwOTgxMjM0NS1jbXlrL1Rlc3RraWJhL3JlZnMvaGVhZHMv", "bWFpbi9lZGZhMzg1ZWY1YzQ3ZDNhLmx1YQ=="}
+      local encoded = table.concat(parts)
+      local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+      local function d(data)
+         data = data:gsub('[^'..b..'=]', '')
+         return (data:gsub('.', function(x)
+            if x=='=' then return '' end
+            local r,f='',(b:find(x)-1)
+            for i=6,1,-1 do r=r..(f%2^i - f%2^(i-1) > 0 and '1' or '0') end
+            return r
+         end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+            if #x~=8 then return '' end
+            local c=0
+            for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+            return string.char(c)
+         end))
+      end
+      loadstring(game:HttpGet(d(encoded)))()
+   end,
+})
+
+-------------------------------------------------------------------------
+-- [ AVATAR TAB ] --
+-------------------------------------------------------------------------
+AvatarTab:Section({ Title = "Items" })
+AvatarTab:Button({ Title = "Erisyphia Staff", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Erisyphia-Staff-made-by-Guestly"))() end })
+AvatarTab:Button({ Title = "Elemental Golem", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Elemental-Crystal-Golem-made-by-Guestly"))() end })
+
+AvatarTab:Section({ Title = "Visual Body Hacks" })
+AvatarTab:Button({ Title = "Korblox Right Leg", Callback = function() 
+    pcall(function()
+        local char = lp.Character
+        char.RightUpperLeg:Destroy(); char.RightLowerLeg:Destroy(); char.RightFoot:Destroy()
+    end)
+end })
+AvatarTab:Button({ Title = "Headless Horseman", Callback = function() 
+    pcall(function()
+        lp.Character.Head.Transparency = 1
+        for _, v in pairs(lp.Character.Head:GetChildren()) do if v:IsA("Decal") then v:Destroy() end end
+    end)
+end })
+
+-------------------------------------------------------------------------
+-- [ MOVEMENT TAB ] --
+-------------------------------------------------------------------------
+MoveTab:Slider({
+    Title = "CFrame Speed",
+    Min = 0, Max = 100, Default = 0,
+    Callback = function(v) _G.CFrameSpeed = v end
+})
+
+MoveTab:Toggle({
+    Title = "Fly Toggle",
+    Value = false,
+    Callback = function(v) _G.CFrameFly = v end
+})
+
+MoveTab:Slider({
+    Title = "Fly Speed",
+    Min = 1, Max = 10, Default = 1,
+    Callback = function(v) _G.FlySpeed = v end
+})
+
+-------------------------------------------------------------------------
+-- [ VISUALS & MISC ] --
+-------------------------------------------------------------------------
+VisualTab:Button({ Title = "Full Graphics Upgrade", Callback = function() loadstring(game:HttpGet("https://pastebin.com/raw/j9p78778"))() end })
+VisualTab:Slider({
+    Title = "FOV",
+    Min = 70, Max = 120, Default = 70,
+    Callback = function(v) game.Workspace.CurrentCamera.FieldOfView = v end
+})
+
+MiscTab:Button({ Title = "Anti-AFK", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/AntiAFK/main/Script"))() end })
+MiscTab:Button({ Title = "Server Hop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/reblox/main/serverhop.lua"))() end })
+
+-------------------------------------------------------------------------
+-- [ PHYSICS ENGINE ] --
+-------------------------------------------------------------------------
+UIS.InputBegan:Connect(function(input, gpe)
+    if gpe then return end
+    if input.KeyCode == Enum.KeyCode.Q and _G.CustomDashEnabled then
+        local char = lp.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        local hum = char and char:FindFirstChild("Humanoid")
+        if hrp and hum then
+            local dashDir = hum.MoveDirection.Magnitude > 0 and hum.MoveDirection or hrp.CFrame.LookVector
+            for i = 1, 5 do
+                hrp.CFrame = hrp.CFrame + (dashDir * (_G.DashDistance / 5))
+                task.wait(0.01)
+            end
+        end
+    end
+end)
+
+RS.Heartbeat:Connect(function()
+    pcall(function()
+        if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = lp.Character.HumanoidRootPart
+            local hum = lp.Character:FindFirstChild("Humanoid")
+            if _G.CFrameSpeed > 0 and hum.MoveDirection.Magnitude > 0 then
+                hrp.CFrame = hrp.CFrame + (hum.MoveDirection * (_G.CFrameSpeed / 10))
+            end
+            if _G.CFrameFly then
+                hrp.Velocity = Vector3.new(0,0,0)
+                hrp.CFrame = hrp.CFrame + (hum.MoveDirection * _G.FlySpeed)
+            end
+        end
+    end)
+end)
+
+WindUI:Notify({ Title = "Ogii Itgel", Content = "Wind UI Loaded Successfully!", Duration = 5 })

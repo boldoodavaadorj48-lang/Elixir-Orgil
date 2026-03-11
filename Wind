@@ -27,7 +27,7 @@ local AvatarTab = Window:Tab({ Title = "Avatar", Icon = "user" })
 local MiscTab = Window:Tab({ Title = "Misc", Icon = "settings" })
 
 -------------------------------------------------------------------------
--- [ TECH TAB - ALL 12 SCRIPTS VERIFIED ] --
+-- [ TECH TAB - ALL 13 SCRIPTS VERIFIED ] --
 -------------------------------------------------------------------------
 TechTab:Section({ Title = "Custom Tech" })
 
@@ -37,8 +37,9 @@ TechTab:Toggle({
     Callback = function(Value) _G.CustomDashEnabled = Value end,
 })
 
--- Custom Buttons (Kiba, Lyoto, Gojo, M1 Reset)
+-- Custom Tech Buttons
 local customTechs = {
+    {Name = "Elixir Orgil", Url = "https://raw.githubusercontent.com/boldoodavaadorj48-lang/Elixir-Orgil/refs/heads/main/Wond"},
     {Name = "Kiba 4", Url = "https://pastebin.com/raw/m6WYZ1KE"},
     {Name = "Lyoto", Url = "https://raw.githubusercontent.com/sigmavexr/AUTO-KYOTO-SATURN-HUB/refs/heads/main/AUTO%20KYOTO"},
     {Name = "Gojo", Url = "https://gojotech.tsbscripts.workers.dev/"},
@@ -99,56 +100,22 @@ TechTab:Button({
 })
 
 -------------------------------------------------------------------------
--- [ AVATAR TAB ] --
+-- [ AVATAR & VISUALS ] --
 -------------------------------------------------------------------------
-AvatarTab:Section({ Title = "Items" })
 AvatarTab:Button({ Title = "Erisyphia Staff", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Erisyphia-Staff-made-by-Guestly"))() end })
 AvatarTab:Button({ Title = "Elemental Golem", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Elemental-Crystal-Golem-made-by-Guestly"))() end })
+AvatarTab:Button({ Title = "Korblox Right Leg", Callback = function() pcall(function() lp.Character.RightUpperLeg:Destroy(); lp.Character.RightLowerLeg:Destroy(); lp.Character.RightFoot:Destroy() end) end })
+AvatarTab:Button({ Title = "Headless Horseman", Callback = function() pcall(function() lp.Character.Head.Transparency = 1 for _,v in pairs(lp.Character.Head:GetChildren()) do if v:IsA("Decal") then v:Destroy() end end end) end })
 
-AvatarTab:Section({ Title = "Visual Body Hacks" })
-AvatarTab:Button({ Title = "Korblox Right Leg", Callback = function() 
-    pcall(function()
-        local char = lp.Character
-        char.RightUpperLeg:Destroy(); char.RightLowerLeg:Destroy(); char.RightFoot:Destroy()
-    end)
-end })
-AvatarTab:Button({ Title = "Headless Horseman", Callback = function() 
-    pcall(function()
-        lp.Character.Head.Transparency = 1
-        for _, v in pairs(lp.Character.Head:GetChildren()) do if v:IsA("Decal") then v:Destroy() end end
-    end)
-end })
-
--------------------------------------------------------------------------
--- [ MOVEMENT TAB ] --
--------------------------------------------------------------------------
-MoveTab:Slider({
-    Title = "CFrame Speed",
-    Min = 0, Max = 100, Default = 0,
-    Callback = function(v) _G.CFrameSpeed = v end
-})
-
-MoveTab:Toggle({
-    Title = "Fly Toggle",
-    Value = false,
-    Callback = function(v) _G.CFrameFly = v end
-})
-
-MoveTab:Slider({
-    Title = "Fly Speed",
-    Min = 1, Max = 10, Default = 1,
-    Callback = function(v) _G.FlySpeed = v end
-})
-
--------------------------------------------------------------------------
--- [ VISUALS & MISC ] --
--------------------------------------------------------------------------
 VisualTab:Button({ Title = "Full Graphics Upgrade", Callback = function() loadstring(game:HttpGet("https://pastebin.com/raw/j9p78778"))() end })
-VisualTab:Slider({
-    Title = "FOV",
-    Min = 70, Max = 120, Default = 70,
-    Callback = function(v) game.Workspace.CurrentCamera.FieldOfView = v end
-})
+VisualTab:Slider({ Title = "FOV", Min = 70, Max = 120, Default = 70, Callback = function(v) game.Workspace.CurrentCamera.FieldOfView = v end })
+
+-------------------------------------------------------------------------
+-- [ MOVEMENT & MISC ] --
+-------------------------------------------------------------------------
+MoveTab:Slider({ Title = "CFrame Speed", Min = 0, Max = 100, Default = 0, Callback = function(v) _G.CFrameSpeed = v end })
+MoveTab:Toggle({ Title = "Fly Toggle", Value = false, Callback = function(v) _G.CFrameFly = v end })
+MoveTab:Slider({ Title = "Fly Speed", Min = 1, Max = 10, Default = 1, Callback = function(v) _G.FlySpeed = v end })
 
 MiscTab:Button({ Title = "Anti-AFK", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/AntiAFK/main/Script"))() end })
 MiscTab:Button({ Title = "Server Hop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/reblox/main/serverhop.lua"))() end })
@@ -188,4 +155,4 @@ RS.Heartbeat:Connect(function()
     end)
 end)
 
-WindUI:Notify({ Title = "Ogii Itgel", Content = "Wind UI Loaded Successfully!", Duration = 5 })
+WindUI:Notify({ Title = "Ogii Itgel", Content = "Hub Fully Loaded!", Duration = 5 })
